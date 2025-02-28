@@ -24,13 +24,20 @@
   -->
 
   <dependencies>
-    <dependency>
+  <!-- Wegert austausch servlet zu jarkata-->
+ <!--   <dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-    
+   -->
+           <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency> 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -72,6 +79,36 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
+        <!-- Wegert jetty Plugin eingefügt - Terminal: mvn jetty:run -->
+         <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>11.0.20</version>
+                <configuration>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
+                    <httpConnector>
+                        <!-- For WebServlet.sendRedirect() work properly in GitHub Codespaces, 
+                             it must be 80. If testing locally, it can be any port -->
+                        <port>8089</port>
+                    </httpConnector>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.mysql</groupId>
+                        <artifactId>mysql-connector-j</artifactId>
+                        <version>8.3.0</version>
+                        <type>jar</type>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.commons</groupId>
+                        <artifactId>commons-dbcp2</artifactId>
+                        <version>2.11.0</version>
+                        <type>jar</type>
+                    </dependency>
+                </dependencies>
+            </plugin>
       </plugins>
     </pluginManagement>
   </build>
